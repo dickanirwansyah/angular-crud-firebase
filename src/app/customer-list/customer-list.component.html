@@ -1,0 +1,57 @@
+<br/>
+<!--filter data-->
+<form class="form-inline">
+    <input type="text" class="form-control" 
+    name="searchInput" 
+    #searchInput="ngModel"
+    [(ngModel)]="searchText"
+    style="width: 80%;"
+    placeholder="Search Data">&nbsp;
+    <button class="btn btn-outline-primary" (click)="searchText=''">Clear</button>
+</form>
+<hr/>
+<!--filter data-->
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Location</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let customer of customerArray">
+            <tr *ngIf="filterCondition(customer)">
+            <td>{{customer.fullName}}</td>
+            <td>{{customer.email}}</td>
+            <td>{{customer.mobile}}</td>
+            <td>{{customer.location}}</td>
+            <td>
+                <button class="btn btn-primary" 
+                (click)="customerService.populateForm(customer)">
+                    Update
+                </button>
+                <button class="btn btn-danger"
+                    (click)="deleteCustomer(customer.$key)">
+                    Delete
+                </button>
+            </td>
+            </tr>
+        </ng-container>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Location</th>
+            <th>Action</th>
+        </tr>
+    </tfoot>
+</table>
+<br/>
+<div class="alert alert-warning" *ngIf="showMessageDelete">
+    <p>Delete successfully</p>
+</div>
